@@ -41,6 +41,7 @@ namespace BunningsTest.Project
         public void WhenIAddTheProductToWishlist()
         {
             var productDetailsPage = PropertiesCollection.CurrentPage.As<ProductDetailsPage>();
+            ScenarioContext.Current["SelectedProductName"] = productDetailsPage.GetProductDetails();
             productDetailsPage.AddToWishList().AddingToWishListSuccessMessage();
             PropertiesCollection.CurrentPage = productDetailsPage.WishListPageInitialized();
         }
@@ -51,6 +52,9 @@ namespace BunningsTest.Project
 
             var wishListPage = PropertiesCollection.CurrentPage.As<WishListPage>();
             Assert.True(wishListPage.WishListPageLoaded());
+            var productName = ScenarioContext.Current["SelectedProductName"];
+            Assert.True(productName.Equals(wishListPage.AddedProductName()));
+            
         }
 
     }
